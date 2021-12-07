@@ -1,0 +1,10 @@
+{
+  "Servers": [
+    {
+      "name": "Server1",
+      "owner": "Matthew",
+      "created": 23122020,
+      "status": "active"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+---
+car:
+  color: blue
+  price: '$20,000'
+  wheels:
+    - model: KDJ39848T
+      location: front-right
+    - model: MDJ39485DK
+      location: front-left
+    - model: KCMDD3435K
+      location: rear-right
+    - model: JJDH34234KK
+      location: rear-left
+bus:
+  color: white
+  price: '$120,000'
+  wheels: # This bus has 4 wheels
+    - model: BBBB39848T
+      location: front-right
+    - model: BBBB9485DK
+      location: front-left
+    - model: BBBB3435K
+      location: rear-right
+    - model: BBBB4234KK
+      location: rear-left
