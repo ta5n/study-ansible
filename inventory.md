@@ -11,7 +11,7 @@
 
 > Note: For linux use `ansible_ssh_pass` and for windows use `ansible_password`. Connector for windows is `winrm`
 
-```yaml
+```ini
 # Web Servers
 web1 ansible_host=server1.company.com ansible_connection=ssh ansible_user=root ansible_ssh_pass=Password123!
 web2 ansible_host=server2.company.com ansible_connection=ssh ansible_user=root ansible_ssh_pass=Password123!
@@ -28,7 +28,7 @@ db1 ansible_host=server4.company.com ansible_connection=winrm ansible_user=admin
   > child_group1
   > child_group2
 
-```yaml
+```ini
 # Web Servers
 web1 ansible_host=server1.company.com ansible_connection=ssh ansible_user=root ansible_ssh_pass=Password123!
 web2 ansible_host=server2.company.com ansible_connection=ssh ansible_user=root ansible_ssh_pass=Password123!
@@ -71,7 +71,7 @@ db_servers
   | dallas_nodes | sql_db2, web_node2, web_node3   |
   | us_nodes     | boston_nodes, dallas_nodes      |
 
-```yaml
+```ini
 # Web Servers
 web_node1 ansible_host=web01.xyz.com ansible_connection=winrm ansible_user=administrator ansible_password=Win$Pass
 web_node2 ansible_host=web02.xyz.com ansible_connection=winrm ansible_user=administrator ansible_password=Win$Pass
@@ -104,4 +104,3 @@ web_node3
 boston_nodes
 dallas_nodes
 ```
-
