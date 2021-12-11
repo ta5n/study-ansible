@@ -1,0 +1,11 @@
+# playbook-copyfile.yml
+---
+-
+  name: Copy file to target servers
+  hosts: localhost
+  tasks:
+    - name: Copy file to remote server
+      copy:
+        src: /etc/hosts
+        dest: /tmp/hosts
+        mode: '0644'

@@ -1,0 +1,8 @@
+# playbook-pingtest.yml
+---
+-
+  name: Check connectivity to the remote host
+  hosts: all
+  tasks:
+    - name: Ping test
+      ping:
