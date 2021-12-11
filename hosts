@@ -1,0 +1,6 @@
+ubuntu ansible_host=ubuntu.mshome.net ansible_port=22
+db0 ansible_host=rhel8hpv.mshome.net ansible_port=22
+vm0 ansible_host=rhel8.mshome.net ansible_port=1022
+vm1 ansible_host=fedora35.mshome.net ansible_port=1122
+vm2 ansible_host=fedora35-2.mshome.net ansible_port=1222
+vm3 ansible_host=fedora35-3.mshome.net ansible_port=1322

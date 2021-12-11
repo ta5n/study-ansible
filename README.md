@@ -7,3 +7,5 @@ Let's start learning ansible
 -[Yaml Format](yaml.md)
 
 -[Playbook format](playbook.md)
+
+-[Ansible config file](configfile.md)
