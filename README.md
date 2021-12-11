@@ -9,3 +9,5 @@ Let's start learning ansible
 -[Playbook format](playbook.md)
 
 -[Ansible config file](configfile.md)
+
+-[Ansible modules](modules.md)
