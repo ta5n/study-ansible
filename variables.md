@@ -47,7 +47,7 @@ inter_ip_range: 192.0.2.0
     Zone: internal
     state: enabled
 ``` 
-
+*see [playbook-web-firewall.yml](playbook-web-firewall.yml)*
 
 - The playbook is used to update name server entry into resolv.conf file on localhost. The name server information is also updated in the inventory file as a variable nameserver_ip. Refer to the inventory file. Replace the ip of the name server in this playbook to use the value from the inventory file, so that in the future if you had to make any changes you simply have to update the inventory file.
 
@@ -73,6 +73,7 @@ localhost ansible_connection=localhost nameserver_ip=10.1.250.10
                 when: '{{ nameserver_ip }}'
                 state: present
 ```
+*see [playbook-update-nameserver.yml](playbook-update-nameserver.yml)*
 
 - We have added a new task to disable SNMP port in the playbook. However the port is hardcoded in the playbook. Update the inventory file to add a new variable snmp_port and assign the value used here. Then update the playbook to use value from the variable. Remember to use curly braces around the variable name.
 
@@ -104,6 +105,9 @@ localhost ansible_connection=localhost nameserver_ip=10.1.250.10 snmp_port=160-1
                 permanent: true
                 state: disabled
 ```
+*see [playbook-update-snmp.yml](playbook-update-snmp.yml)*
+
+
 - We are printing some personal information to the screen. We would like to move the car_model, country_name and title to a variable defined at the play level. Create three new variables (car_model, country_name and title) under the play and move the values over. Use the variables in the task.
 
 ```yml
@@ -128,3 +132,4 @@ localhost ansible_connection=localhost nameserver_ip=10.1.250.10 snmp_port=160-1
             name: 'Print my title'
             command: 'echo "I work as a {{ title }}"'
 ```
+*see [playbook-define-vars.yml](playbook-define-vars.yml)*
