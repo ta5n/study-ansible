@@ -1,0 +1,19 @@
+# playbook-conditionals-register.yml
+---
+- name: Check if service is down
+  hosts: all
+  tasks:
+  - name: Check if service is down
+    service:
+      name: "{{ item.name }}"
+      state: "{{ item.state }}"
+    with_items: "{{ services }}"
+    register: service_status
+  - name: Send email
+    email:
+      to: "{{ admin_email }}"
+      subject: "{{ item.name }} is down"
+      body: "{{ item.name }} Service is down"
+    when: service_status.changed == 1 and service_status.service_state == "down"
+    with_items: "{{ services }}"
+    loop: "{{ service_status.results }}"

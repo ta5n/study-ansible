@@ -37,13 +37,68 @@ Conditionals are used to determine whether a task should be run or not. They are
     apt:
       name: nginx
       state: present
-    when: ansible_os_family == 'Debian'
+    when: ansible_os_family == 'Debian' and ansible_distribution_version >= '8'
   - name: Install NGINX on Redhat
     dnf:
       name: nginx
       state: present
-    when: ansible_os_family == 'Redhat'
+    when: ansible_os_family == 'Redhat' or ansible_os_family == 'CentOS'
 ```
+Conditional statements can be used in loops and in other conditional statements. The following example shows how to use conditional statements in loops.  The `when` and `with_` keywords can be used to assign a value to a variable.
+
+```yml
+# playbook-conditionals-loops.yml
+---
+- name: Install Softwares
+  hosts: all
+  vars:
+    packages:
+      - name: nginx
+        required: Yes
+      - name: php
+        required: Yes
+      - name: mysql
+        required: Yes
+      - name: apache
+        required: No
+  tasks:
+  - name: Install {{ item.name }} on Debian
+    apt:
+      name: "{{ item.name }}"
+      state: present
+    when: item.required == 'Yes' and ansible_os_family == 'Debian' and ansible_distribution_version >= '8' 
+    loop: "{{ packages }}"
+```
+
+Conditionals and register -  here below an example when a service is down and sends an email to the administrator.
+
+```yml
+# playbook-conditionals-register.yml
+---
+- name: Check if service is down
+  hosts: all
+  tasks:
+  - name: Check if service is down
+    service:
+      name: "{{ item.name }}"
+      state: "{{ item.state }}"
+    with_items: "{{ services }}"
+    register: service_status
+  - name: Send email
+    email:
+      to: "{{ admin_email }}"
+      subject: "{{ item.name }} is down"
+      body: "{{ item.name }} Service is down"
+    when: service_status.changed == 1
+    with_items: "{{ services }}"
+    loop: "{{ service_status.results }}"
+```
+*see [playbook-conditionals-register.yml](playbook-conditionals-register.yml)*
+
+*see also:* [Conditionals in Ansible](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_conditional.html)
+
+
+
 
 - The given playbook attempts to start mysql service on all_servers. Use the when condition to run this task if the host (ansible_host) is the database server. Refer to the inventory file to identify the name of the database server.
 
