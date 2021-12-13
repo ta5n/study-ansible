@@ -1,0 +1,19 @@
+# playbook-1.yml
+- name: Play 1
+  hosts: localhost
+  tasks:
+    - name: Execute a command
+      command: date
+
+    - name: execute a script
+      script: test_script.sh
+
+    - name: install httpd service
+      yum:
+        name: httpd
+        state: present
+
+    - name: start web server
+      service:
+        name: httpd
+        state: started

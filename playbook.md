@@ -3,7 +3,7 @@
 This file is a list of configurations to be run on listed environments. Every list item has these key-values.`tasks` section is an ordered list!
 
 ```yaml
-# playbook.yml
+# playbook-1.yml
 - name: Play 1
   hosts: localhost
   tasks:
@@ -23,11 +23,12 @@ This file is a list of configurations to be run on listed environments. Every li
         name: httpd
         state: started
 ```
+*see [playbook-1.yml](playbook-1.yml)*
 
 host should be defined in the `inventory` file:
 
 ```ini
-# inventory file
+; inventory-1.ini file
 localhost
 
 server1.company.com
@@ -45,6 +46,7 @@ server6.company.com
 server7.company.com
 server8.company.com
 ```
+*see [inventory-1.ini](inventory-1.ini)*
 ---
 
 - Update the task to execute the command cat /etc/hosts and change task name to Execute a command to display hosts file
