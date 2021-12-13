@@ -1,0 +1,10 @@
+# playbook-mysql-started.yml
+---
+-
+    name: 'Execute a script on all web server nodes'
+    hosts: all_servers
+    tasks:
+        -
+            service: 'name=mysql state=started'
+            # solution
+            when: 'ansible_host=="server4.company.com"'

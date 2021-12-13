@@ -1,0 +1,9 @@
+# playbook-conditionals1.yml
+---
+- name: Install NGINX
+  hosts:
+  tasks:
+  - name: Install NGINX on Debian
+    apt:
+      name: nginx
+      state: present

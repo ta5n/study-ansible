@@ -1,0 +1,15 @@
+# playbook-conditionals-when.yml
+---
+- name: Install NGINX
+  hosts:
+  tasks:
+  - name: Install NGINX on Debian
+    apt:
+      name: nginx
+      state: present
+    when: ansible_os_family == 'Debian'
+  - name: Install NGINX on Redhat
+    dnf:
+      name: nginx
+      state: present
+    when: ansible_os_family == 'Redhat'

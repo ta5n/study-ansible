@@ -13,3 +13,5 @@ Let's start learning ansible
 -[Ansible modules](modules.md)
 
 -[Ansible variables](variables.md)
+
+-[Ansible conditionals](conditionals.md)
