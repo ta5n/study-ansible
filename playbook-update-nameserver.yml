@@ -1,0 +1,15 @@
+# playbook-nameserver.yml
+---
+-
+    name: 'Update nameserver entry into resolv.conf file on localhost'
+    hosts: localhost
+    tasks:
+        -
+            name: 'Update nameserver entry into resolv.conf file'
+            lineinfile:
+                path: /etc/resolv.conf
+                line: 'nameserver 10.1.250.10'
+# solution to replace the ip of the name server in this playbook to use the value from the inventory file
+#                line: 'nameserver {{ nameserver_ip }}' 
+                when: '{{ nameserver_ip }}'
+                state: present

@@ -1,0 +1,19 @@
+# playbook-update-snmp.yml
+---
+-
+    name: 'Update nameserver entry into resolv.conf file on localhost'
+    hosts: localhost
+    tasks:
+        -
+            name: 'Update nameserver entry into resolv.conf file'
+            lineinfile:
+                path: /etc/resolv.conf
+                line: 'nameserver {{ nameserver_ip }}'
+        -
+            name: 'Disable SNMP Port'
+            firewalld:
+                port: 160-161
+# solution to replace snmp port in this playbook to use the value from the inventory file                
+#                port: {{ snmp_port }}
+                permanent: true
+                state: disabled

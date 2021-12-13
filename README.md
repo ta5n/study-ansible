@@ -11,3 +11,5 @@ Let's start learning ansible
 -[Ansible config file](configfile.md)
 
 -[Ansible modules](modules.md)
+
+-[Ansible variables](variables.md)

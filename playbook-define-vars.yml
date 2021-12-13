@@ -1,0 +1,20 @@
+# playbook-define-vars.yml
+---
+-
+    name: 'Update nameserver entry into resolv.conf file on localhost'
+    hosts: localhost
+# solution to move the car_model, country_name and title to a variable defined at the play level
+    vars:
+        car_model: 'BMW 318i'
+        country_name: Turkey
+        title: 'Software Engineer'    
+    tasks:
+        -
+            name: 'Print my car model'
+            command: 'echo "My car''s model is {{ car_model }}"'
+        -
+            name: 'Print my country'
+            command: 'echo "I live in the country of {{ country_name }}"'
+        -
+            name: 'Print my title'
+            command: 'echo "I work as a {{ title }}"'
