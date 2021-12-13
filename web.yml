@@ -1,0 +1,5 @@
+# variable file - web.yml
+
+http_port: 8081
+snmp_port: 161-162
+inter_ip_range: 192.0.2.0

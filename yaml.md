@@ -235,7 +235,7 @@ employee:
       - month: august
         amount: 3400
 ```
-
+*see example [payslip.yml](payslip.yml)*
 - Try to fix the errors below
 
 ```yaml

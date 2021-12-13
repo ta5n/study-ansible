@@ -104,3 +104,5 @@ web_node3
 boston_nodes
 dallas_nodes
 ```
+*see example [hosts](hosts)*
+*see example [inventory.ini](inventory.ini)*

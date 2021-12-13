@@ -11,3 +11,6 @@ Ansible checks `ansible.cfg` file in the order below
 3. `~/.ansible.cfg` in users home directory
 
 4. `/etc/ansible/ansible.cfg` system-wide config file
+
+  
+*see example [ansible.cfg](ansible.cfg)*
