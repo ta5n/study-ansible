@@ -1,0 +1,24 @@
+# playbook-create-users2.yml
+---
+-
+  name: Create users
+  hosts: localhost
+  tasks:
+    - user: name={{ item.name }} uid={{ item.uid }} gid={{ item.gid }} groups={{ item.groups }} state=present
+      loop:
+        - name: user1 
+          uid: 1001 
+          gid: 1001
+          groups: wheel
+        - name: user2 
+          uid: 1002 
+          gid: 1002
+          groups: users
+        - name: user3
+          uid: 1003
+          gid: 1003
+          groups: users
+        - name: user4
+          uid: 1004
+          gid: 1004
+          groups: users

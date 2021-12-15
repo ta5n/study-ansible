@@ -1,0 +1,12 @@
+# playbook-create-mogodbs.yml
+---
+-
+  name: Check multiple mongodbs
+  hosts: localhost
+  tasks:
+    - debug: msg="DB={{ item.database }} PID={{ item.pid }}
+      with_mongodbs:
+        - database: dev
+          connection_string: mongodb://dev.mongo/
+        - database: prod
+          connection_string: mongodb://prod.mongo/

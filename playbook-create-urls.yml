@@ -1,0 +1,11 @@
+# playbook-create-urls.yml
+---
+-
+  name: Get from multiple urls
+  hosts: localhost
+  tasks:
+    - debug: var=item
+      with_urls:
+        - http://www.example.com/
+        - http://www.example2.com/
+        - http://www.example3.com/

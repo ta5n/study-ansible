@@ -1,0 +1,12 @@
+# playbook-create-users1.yml
+---
+-
+  name: Create users
+  hosts: localhost
+  tasks:
+    - user: name='{{ item }}' state=present
+      loop:
+        - user1
+        - user2
+        - user3
+        - user4

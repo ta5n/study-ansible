@@ -1,0 +1,17 @@
+# playbook-print-fruits.yml
+---
+-
+    name: 'Print list of fruits'
+    hosts: localhost
+    vars:
+        fruits:
+            - Apple
+            - Banana
+            - Grapes
+            - Orange
+    tasks:
+        -
+            # command: 'echo "Apple"'
+            # solution
+            command: 'echo "{{ item }}"'
+            with_items: '{{ fruits }}'
