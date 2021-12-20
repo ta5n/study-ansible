@@ -1,7 +1,7 @@
 # playbook-conditionals-loops.yml
 ---
 - name: Install Softwares
-  hosts: all
+  hosts: vm2
   vars:
     packages:
       - name: nginx
@@ -13,9 +13,9 @@
       - name: apache
         required: No
   tasks:
-  - name: Install {{ item.name }} on Debian
+  - name: Install {{ item.name }} on Fedora
     apt:
       name: "{{ item.name }}"
       state: present
-    when: item.required == 'Yes' and ansible_os_family == 'Debian' and ansible_distribution_version >= '8' 
+    when: item.required == 'Yes' and ansible_os_family == 'Redhat' and ansible_distribution_version >= '34' 
     loop: "{{ packages }}"

@@ -2,15 +2,17 @@
 ---
 -
     name: 'Am I an Adult or a Child?'
-    hosts: localhost
+    hosts: ubuntu
     vars:
         age: 25
     tasks:
         -
+            name: I am a Child
             command: 'echo "I am a Child"'
             # solution 1
             when: 'age < 18'
         -
+            name: I am an Adult
             command: 'echo "I am an Adult"'
             # solution 2
             when: 'age >= 18'
