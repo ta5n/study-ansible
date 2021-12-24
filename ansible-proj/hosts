@@ -1,0 +1,2 @@
+testserver ansible_host=alma.mshome.net ansible_port=2222 ansible_user=ansible
+rhel8 ansible_host=rhel8hpv.mshome.net

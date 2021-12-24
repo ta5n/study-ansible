@@ -1,0 +1,97 @@
+# This is automation file for ansible course project.
+# All services will be installed on a single host.
+---
+-
+  name: Setup LAMP stack
+  hosts: testserver
+  become: yes
+  vars: 
+    mysql_root_password: "changeit"
+    mysql_root_hashed_password: "*FC2645EA2511A819C7D7208D9124CDB5818B3D4B"
+    mysql_host: "fedora-test.mshome.net"
+    mysql_db_name: "ecomdb"
+    mysql_db_user: "ecomuser"
+    mysql_db_password: "ecompassword"
+    mysql_db_hashed_password:   "*44AE38A3740F690D1224FB59CF15ABB93876ADDF"
+
+  tasks:
+    - name: Install firewalld, mariadb, nginx, php
+      dnf: 
+        name: 
+          - firewalld
+          - mariadb-server
+          - python3-PyMySQL          
+          - nginx
+          - php
+          - nmap
+        state: latest
+        update_cache: yes
+
+    - name: Start & Enable Services
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      with_items:
+        - firewalld
+        - mariadb
+        - nginx
+
+    - name: Configure Firewalld
+      firewalld:
+        permanent: yes
+        service: "{{ item }}"
+        state: "enabled"
+      with_items:
+        - http
+        - https
+        - ssh
+        - mysql     
+
+    - name: Change MySQL root password
+      mysql_user:
+        name: 'root'
+        password: '{{ mysql_root_password }}'
+        state: present
+
+    - name: upload my.cnf
+      template:
+        src: assets/my.cnf.j2
+        dest: /root/.my.cnf
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: remove all anonymous users
+      no_log: no
+      community.mysql.mysql_user:
+        name: ''
+        host_all: yes
+        state: absent
+
+    - name: create ecomdb database
+      community.mysql.mysql_db:
+        name: "{{ mysql_db_name }}"
+        state: present
+
+    - name: create a database user {{ mysql_db_user }} with password
+      community.mysql.mysql_user:
+        name: '{{ mysql_db_user }}'
+        password: '{{ mysql_db_hashed_password }}'
+        encrypted: yes
+        priv: 'ecomdb.*:ALL,GRANT'
+        state: present
+
+    - name: upload db-load-script.sql to remote host
+      copy: 
+        src: assets/db-load-script.sql
+        dest: /tmp/db-load-script.sql
+      delegate_to: testserver
+
+    - name: import database db-load-script.sql
+      community.mysql.mysql_db:
+        name: '{{ mysql_db_name }}'
+        target: /tmp/db-load-script.sql
+        state: import
+        login_user: '{{ mysql_db_user }}'
+        login_password: '{{ mysql_db_password }}'
