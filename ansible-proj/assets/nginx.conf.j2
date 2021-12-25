@@ -1,0 +1,13 @@
+server {
+  listen 80;
+  listen [::]:80 default ipv6only=on;
+  server_name ecom.mshome.net;
+  root /var/www/{{ site_url }};
+  access_log /var/log/nginx/{{ site_url }}.access.log;
+  error_log /var/log/nginx/{{ site_url }}.error.log;
+  # root /var/www/html/ansible/public;
+  index index.html index.htm index.php;
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}

@@ -8,11 +8,11 @@
   vars: 
     mysql_root_password: "changeit"
     mysql_root_hashed_password: "*FC2645EA2511A819C7D7208D9124CDB5818B3D4B"
-    mysql_host: "fedora-test.mshome.net"
     mysql_db_name: "ecomdb"
     mysql_db_user: "ecomuser"
     mysql_db_password: "ecompassword"
     mysql_db_hashed_password:   "*44AE38A3740F690D1224FB59CF15ABB93876ADDF"
+    site_url: "ecom.mshome.net"
 
   tasks:
     - name: Install firewalld, mariadb, nginx, php
@@ -88,10 +88,48 @@
         dest: /tmp/db-load-script.sql
       delegate_to: testserver
 
-    - name: import database db-load-script.sql
-      community.mysql.mysql_db:
-        name: '{{ mysql_db_name }}'
-        target: /tmp/db-load-script.sql
-        state: import
-        login_user: '{{ mysql_db_user }}'
-        login_password: '{{ mysql_db_password }}'
+# already installed
+    # - name: import database db-load-script.sql
+    #   community.mysql.mysql_db:
+    #     name: '{{ mysql_db_name }}'
+    #     target: /tmp/db-load-script.sql
+    #     state: import
+    #     login_user: '{{ mysql_db_user }}'
+    #     login_password: '{{ mysql_db_password }}'
+
+    - name: mkdir sites-available and sites-enabled
+      file:
+        path: '{{ item }}'
+        state: directory
+      with_items:
+        - /var/www/{{ site_url }}
+        - /var/log/nginx/{{ site_url }}
+      delegate_to: testserver
+# did not work so far
+    - name: copy nginx config to sites-available
+      template:
+        src: assets/nginx.conf.j2
+        dest: /etc/nginx/conf.d/{{ site_url }}.conf
+        owner: root
+        group: root
+        mode: 0644
+      notify: restart_nginx
+
+    - name: copy web files to {{ site_url }}
+      copy:
+        src: www/
+        dest: /var/www/{{ site_url }}
+        owner: nginx
+        group: nginx
+        mode: 0755
+      delegate_to: testserver
+      notify: restart_nginx
+
+  handlers:
+    - name: restart_nginx
+      ansible.builtin.service:
+          name: nginx
+          state: restarted
+
+
+    
