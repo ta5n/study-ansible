@@ -23,7 +23,11 @@
           - python3-PyMySQL          
           - nginx
           - php
-          - nmap
+          - php-pdo
+          - php-mysqlnd
+          - php-mbstring
+          - php-gd
+
         state: latest
         update_cache: yes
 
@@ -60,7 +64,7 @@
         dest: /root/.my.cnf
         owner: root
         group: root
-        mode: 0644
+        mode: 0744
 
     - name: remove all anonymous users
       no_log: no
@@ -88,16 +92,15 @@
         dest: /tmp/db-load-script.sql
       delegate_to: testserver
 
-# already installed
-    # - name: import database db-load-script.sql
-    #   community.mysql.mysql_db:
-    #     name: '{{ mysql_db_name }}'
-    #     target: /tmp/db-load-script.sql
-    #     state: import
-    #     login_user: '{{ mysql_db_user }}'
-    #     login_password: '{{ mysql_db_password }}'
+    - name: import database db-load-script.sql
+      community.mysql.mysql_db:
+        name: '{{ mysql_db_name }}'
+        target: /tmp/db-load-script.sql
+        state: import
+        login_user: '{{ mysql_db_user }}'
+        login_password: '{{ mysql_db_password }}'
 
-    - name: mkdir sites-available and sites-enabled
+    - name: mkdir {{ site_url }} for web and log files
       file:
         path: '{{ item }}'
         state: directory
@@ -105,14 +108,14 @@
         - /var/www/{{ site_url }}
         - /var/log/nginx/{{ site_url }}
       delegate_to: testserver
-# did not work so far
-    - name: copy nginx config to sites-available
+
+    - name: copy nginx config to conf.d
       template:
         src: assets/nginx.conf.j2
         dest: /etc/nginx/conf.d/{{ site_url }}.conf
         owner: root
         group: root
-        mode: 0644
+        mode: 0744
       notify: restart_nginx
 
     - name: copy web files to {{ site_url }}
