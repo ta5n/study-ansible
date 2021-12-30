@@ -108,7 +108,11 @@
         - /var/www/{{ site_url }}
         - /var/log/nginx/{{ site_url }}
       delegate_to: testserver
+<<<<<<< HEAD
 
+=======
+# did not work so far
+>>>>>>> 344a7ddc7c4bab6ac3f31c2932ddb0106b7326af
     - name: copy nginx config to conf.d
       template:
         src: assets/nginx.conf.j2
